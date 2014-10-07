@@ -1,0 +1,49 @@
+<nav class="sub-nav">
+  {{breadcrumbs}}
+  {{search}}
+</nav>
+
+<article class="main-column">
+
+  <header class="article-header">
+    <h1>{{visibility}} {{title}}</h1>
+    <div class="article-info">
+      <div class="article-avatar">{{author_avatar}}</div>
+      <div class="article-meta">
+        <strong class="article-author">{{author_name}}</strong>
+        <div class="article-updated meta">{{updated_at}}</div>
+      </div>
+      <div class="article-subscribe">{{subscribe}}</div>
+    </div>
+  </header>
+
+  <div class="article-body markdown">
+    {{body}}
+  </div>
+
+  <div class="article-attachments">
+    {{attachments}}
+  </div>
+
+  <footer class="article-footer">
+    {{vote}}
+    {{share}}
+  </footer>
+
+  <div class="article-more-questions">
+    {{more_questions}}
+  </div>
+
+  <section class="article-comments">
+    <h3>{{comment_heading}}</h3>
+    {{comment_list}}
+    {{comment_pagination}}
+    {{comment_form}}
+  </section>
+
+</article>
+
+<aside class="article-sidebar side-column">
+  {{recent_articles}}
+  {{related_articles}}
+</aside>
