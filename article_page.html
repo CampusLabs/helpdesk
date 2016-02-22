@@ -6,39 +6,117 @@
 <article class="main-column">
 
   <header class="article-header">
-    <h1>{{visibility}} {{title}}</h1>
+    <h1>{{#if article.internal}}
+      <span class="visibility-internal" data-title="{{t 'internal'}}">
+        <span class="visibility-internal-icon"></span>
+      </span>
+    {{/if}} {{article.title}}</h1>
     <div class="article-info">
-      <div class="article-avatar">{{author_avatar}}</div>
+      <div class="article-avatar"><img src="{{article.author.avatar_url}}" alt="Avatar"/></div>
       <div class="article-meta">
-        <strong class="article-author">{{author_name}}</strong>
-        <div class="article-updated meta">{{updated_at}}</div>
+        <strong class="article-author">{{#if article.author.url}}
+          <a href="{{article.author.url}}" target="_zendesk_lotus">{{article.author.name}}</a>
+        {{else}}
+          {{article.author.name}}
+        {{/if}}</strong>
+        <div class="article-updated meta">{{date article.updated_at}}</div>
       </div>
       <div class="article-subscribe">{{subscribe}}</div>
     </div>
   </header>
 
   <div class="article-body markdown">
-    {{body}}
+    {{article.body}}
   </div>
 
   <div class="article-attachments">
-    {{attachments}}
+    <ul class="attachments">
+      {{#each attachments}}
+        <li>
+          <a href="{{url}}" target="_blank">{{name}}</a>
+          <span>({{size}})</span>
+        </li>
+      {{/each}}
+    </ul>
   </div>
 
   <footer class="article-footer">
-    {{vote}}
+    {{#with article}}
+      <div class="article-vote">
+        <span class="article-vote-question">{{t 'was_this_article_helpful'}}</span>
+        <div class="article-vote-controls">
+          {{vote 'up' class='article-vote-up' selected_class='article-voted' role='button'}}
+          {{vote 'down' class='article-vote-down' selected_class='article-voted' role='button'}}
+        </div>
+        <small class="article-vote-count">
+          {{vote 'label' class='article-vote-label'}}
+        </small>
+      </div>
+    {{/with}}
     {{share}}
   </footer>
 
   <div class="article-more-questions">
-    {{more_questions}}
+    {{request_callout}}
   </div>
 
   <section class="article-comments">
-    <h3>{{comment_heading}}</h3>
-    {{comment_list}}
-    {{comment_pagination}}
-    {{comment_form}}
+    <h3>{{t 'comments'}}</h3>
+    {{#if comments}}
+      <ul class="comment-list">
+        {{#each comments}}
+          <li id="{{anchor}}" class="comment">
+            <div class="comment-avatar {{#if author.agent}} comment-avatar-agent {{/if}}">
+              <img src="{{author.avatar_url}}" alt="Avatar">
+            </div>
+            <div class="comment-container">
+              <header class="comment-header">
+                <strong class="comment-author">
+                  {{#if author.url}}
+                    <a href="{{author.url}}" target="_zendesk_lotus">{{author.name}}</a>
+                  {{else}}
+                    {{author.name}}
+                  {{/if}}
+                </strong>
+                <span class="comment-published">{{date created_at}}</span>
+                {{#if pending}}
+                  <span class="comment-pending">{{t 'pending_approval'}}</span>
+                {{/if}}
+              </header>
+              <div class="comment-body markdown">{{body}}</div>
+              {{#if editor}}
+                <div class="comment-edited meta">
+                  {{t 'comment_edited' editor_name=editor.name}} {{date edited_at timeago=true}}
+                </div>
+              {{/if}}
+              <footer class="comment-footer">
+                <span class="comment-actions">
+                  {{#with ticket}}
+                    <a href="{{url}}" target="_zendesk_lotus" class="escalation-badge">
+                      #{{id}}
+                    </a>
+                  {{/with}}
+                  {{actions}}
+                </span>
+              </footer>
+            </div>
+          </li>
+        {{/each}}
+      </ul>
+    {{/if}}
+    {{pagination}}
+    {{#form 'comment' class='comment-form'}}
+      <div class="comment-avatar">
+        {{user_avatar class='user-avatar'}}
+      </div>
+
+      <div class="comment-container">
+        {{textarea 'body' rows='4'}}
+        <div class="comment-form-controls">
+          {{input type='submit'}}
+        </div>
+      </div>
+    {{/form}}
   </section>
 
 </article>
@@ -46,4 +124,14 @@
 <aside class="article-sidebar side-column">
   {{recent_articles}}
   {{related_articles}}
+  <section class="related-articles support">
+    <h3>Get support</h3>
+		<ul>
+      <li>
+       Call us: 972.907.0900, Option 2</li>
+    </ul>
+
+    <a href="#" class="button tiny radius expand" onclick="return SnapABug.startLink();" rel="nofollow"><strong>CHAT WITH US</strong></a>
+    <a href="mailto:support@orgsync.com?subject=Help Desk Support Inquiry" class="button tiny radius expand" onclick="return SnapABug.startLink();" rel="nofollow"><strong>EMAIL SUPPORT</strong></a>
+  </section>
 </aside>

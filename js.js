@@ -24,6 +24,14 @@ $(document).ready(function() {
     $('.community-nav').addClass('no-create');
   }
 
+  if(url.match('200132716')){
+    $('body').addClass('no-vote');
+  }
+
+  if(url.match('200132726')){
+    $('body').addClass('no-vote');
+  }
+
   // Zendesk has naming we don't like in their new community tool.
   // This is the hacky
   // way to fix it cause they do not have the option to do so.
@@ -68,4 +76,3 @@ $(document).ready(function() {
     $(".comment-form-controls").show();
   });
 });
-

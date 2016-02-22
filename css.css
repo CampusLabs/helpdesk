@@ -22,6 +22,10 @@ body {
   -moz-font-smoothing: antialiased;
 }
 
+.share{
+  display: none;
+}
+
 p{
   font-size: 15px;
   margin-top: 0;
@@ -97,7 +101,6 @@ h2{
 h3 {
   font-size: 18px;
   font-weight: 400;
-  text-transform: uppercase;
 }
 h4{
   font-size: 16px;
@@ -147,15 +150,15 @@ input::-webkit-inner-spin-button {
 }
 
 ::-webkit-input-placeholder {
-  color: #cccccc;
+  color: #333;
 }
 
 :-ms-input-placeholder {
-  color: #cccccc;
+  color: #333;
 }
 
 ::-moz-placeholder {
-  color: #cccccc;
+  color: #333;
 }
 
 /* Buttons */
@@ -318,7 +321,7 @@ button img, [role=button] img {
 }
 
 .search-box input, .sub-nav .search input {
-  font-weight: lighter;
+  font-weight: 400;
   padding: .75em 2.7em;
   width: 100%;
   -webkit-appearance: none;
@@ -328,11 +331,15 @@ button img, [role=button] img {
   display: none;
 }
 
+.search-box input{
+  font-weight: 400;
+}
+
 /* Breadcrumbs */
 .breadcrumbs li {
   color: #bebebe;
   display: inline-block;
-  font-size: 12px;
+  font-size: 14px;
 }
 .breadcrumbs li + li:before {
   content: ">";
@@ -639,7 +646,10 @@ body.community-enabled .knowledge-base {
   text-transform: capitalize;
   float: right;
 }
-.support.panel .button{
+.related-articles.support ul{
+  margin-bottom: 0;
+}
+.support .button{
   display: block;
   background: #158EC2;
   color: #FFF;
@@ -651,6 +661,17 @@ body.community-enabled .knowledge-base {
 .button.icon-dashboard{
   text-align: center;
   display: block;
+}
+
+.section-tree h3{
+  margin-top: 20px;
+  font-weight: bold;
+  margin-bottom: 10px;
+  padding: 0 5px;
+}
+.section-tree .article-list, .category-tree .article-list{
+  border: 0;
+  padding: 0;
 }
 /* Knowledge base trees */
 .article-list li, .community li {
@@ -722,8 +743,6 @@ body.community-enabled .knowledge-base {
 
 /* Sub-nav */
 .sub-nav {
-  background: rgba(255,255,255,0.6);
-  border: 1px solid #dedede;
   display: table;
   margin-top: 25px;
   margin-bottom: 25px;
@@ -732,9 +751,9 @@ body.community-enabled .knowledge-base {
   width: 100%;
 }
 .sub-nav .search input{
-  border: 1px solid #eee;
-  border-top: 0;
-  border-bottom: 0;
+  border: 1px solid #ccc;
+  color: #333;
+  border-radius: 3px;
   padding-top: .5rem;
   padding-bottom: .5rem;
 }
@@ -836,9 +855,9 @@ body.community-enabled .knowledge-base {
 
 /* Side column */
 .side-column h3 {
-  border-bottom: 1px solid #eeeeee;
-  padding-bottom: 15px;
-  margin: 0 0 20px;
+  border-bottom: 1px dotted #999;
+  padding-bottom: 5px;
+  margin: 0 0 10px;
 }
 .side-column ul {
   margin-bottom: 60px;
@@ -931,6 +950,24 @@ body.community-enabled .knowledge-base {
 .comment > *, .comment-form > * {
   display: table-cell;
   vertical-align: top;
+}
+
+.comment {
+  clear: both;
+  display: block;
+  position: relative;
+}
+
+.comment .comment-avatar{
+  display: inline-block;
+}
+
+.comment .vote{
+	 min-width: 50px;
+}
+
+.comment-form .comment-container{
+  width: 100%;
 }
 
 .comment-vote, .comment-bookmark {
@@ -2145,7 +2182,7 @@ body.community-enabled .search-results-column + .search-results-column {
 .post-container{
   display: inline-block;
   margin-left: 20px;
-  max-width: 85%;
+  width: 85%;
 }
 
 .post-status{
@@ -2225,7 +2262,8 @@ body.community-enabled .search-results-column + .search-results-column {
 
 /* Community */
 .post-to-community a {
-  background: white;
+  background: #158EC2 ;
+  color: white;
   font-weight: bold;
   padding-left: 20px;
   padding-right: 20px;
@@ -2236,6 +2274,17 @@ body.community-enabled .search-results-column + .search-results-column {
   top: -1px;
 }
 
+.article-list{
+  background: white;
+  border: 1px solid #dedede;
+  font-size: 15px;
+  padding: 20px;
+}
+
+.article-list li{
+  border-bottom: 1px dotted #dedede;
+  padding: 8px;
+}
 
 /* Community topics page */
 .topic-list li {
@@ -2368,4 +2417,23 @@ body.community-enabled .search-results-column + .search-results-column {
 
 .topic-list li:last-child{
   border-bottom: 1px solid #dedede;
+}
+
+
+.comment-container{
+  display: inline-block;
+  margin-left: 10px;
+  width: 65%;
+}
+
+
+.no-vote .post-overview-count + .post-overview-count{
+  display: none;
+}
+
+.no-vote .topic-filters .dropdown:first-child{
+  display: none;
+}
+.no-vote .post-vote{
+  display: none;
 }

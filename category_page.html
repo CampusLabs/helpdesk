@@ -3,8 +3,53 @@
   {{search}}
 </nav>
 
-<h1 class="page-header">{{title}}</h1>
+<h1 class="page-header">{{category.name}}</h1>
 
-<p>{{description}}</p>
+<p>{{category.description}}</p>
 
-{{section_tree}}
+{{#if category.sections}}
+  <div class="section-tree">
+    {{#each sections}}
+      <section class="section">
+        <h3>
+          {{#if internal}}
+            <span class="visibility-internal" data-title="{{t 'internal'}}">
+              <span class="visibility-internal-icon"></span>
+            </span>
+          {{/if}}
+
+          <a href="{{url}}">{{name}}</a>
+        </h3>
+
+        {{#if articles}}
+          <ul class="article-list">
+            {{#each articles}}
+              <li {{#if promoted}} class="article-promoted" {{/if}} >
+                {{#if promoted}}
+                  <span data-title="{{t 'promoted'}}">★</span>
+                {{/if}}
+                <a href="{{url}}">{{title}}</a>
+              </li>
+            {{/each}}
+          </ul>
+
+          {{#if more_articles}}
+            <a href="{{url}}" class="see-all-articles">
+              {{t 'show_all_articles' count=article_count}}
+            </a>
+          {{/if}}
+
+        {{else}}
+          <i class="section-empty">
+            <a href="{{url}}">{{t 'empty'}}</a>
+          </i>
+        {{/if}}
+      </section>
+    {{/each}}
+  </div>
+
+{{else}}
+  <i class="category-empty">
+    <a href="{{category.url}}">{{t 'empty'}}</a>
+  </i>
+{{/if}}
