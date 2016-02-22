@@ -1,0 +1,49 @@
+<nav class="sub-nav">
+  {{breadcrumbs}}
+  {{search}}
+</nav>
+
+<header class="page-header">
+  <span class="dropdown">
+    <span class="dropdown-toggle">
+      <h1>{{t 'community'}}</h1>
+    </span>
+    <span class="dropdown-menu" role="menu">
+      {{#link 'topics' role='menuitem' selected='true'}}
+        {{t 'show_topics'}}
+      {{/link}}
+      {{#link 'posts' role='menuitem'}}
+        {{t 'show_all_posts'}}
+      {{/link}}
+    </span>
+  </span>
+  <span class="post-to-community">
+    {{link 'new_post' role='button'}}
+  </span>
+</header>
+
+{{#unless topics}}
+  <p>{{t 'no_content'}}</p>
+{{/unless}}
+
+<ul class="topic-list">
+  {{#each topics}}
+    <li>
+      <h3>
+        {{#if internal}}
+          <span class="visibility-internal" data-title="{{t 'internal'}}">
+            <span class="visibility-internal-icon"></span>
+          </span>
+        {{/if}}
+        <a href="{{url}}">{{name}}</a>
+      </h3>
+      <p>{{excerpt description}}</p>
+      <span class="meta-group">
+        <span>{{t 'post_count' count=post_count}}</span>
+        <span>{{t 'follower_count' count=follower_count}}</span>
+      </span>
+    </li>
+  {{/each}}
+</ul>
+
+{{pagination}}

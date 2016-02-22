@@ -1,0 +1,156 @@
+<nav class="sub-nav">
+  {{breadcrumbs}}
+  {{search scoped=true}}
+</nav>
+
+<header class="page-header">
+  <span class="post-actions">
+    {{post.actions}}
+    {{#with post.ticket}}
+      <a href="{{url}}" target="_zendesk_lotus" class="escalation-badge">
+        #{{id}}
+      </a>
+    {{/with}}
+  </span>
+  <span class="post-to-community">
+    {{link 'new_post' role='button'}}
+  </span>
+</header>
+
+<div class="main-column">
+
+  <article class="post {{#if post.featured}} post-featured {{/if}} {{#if post.pinned}} post-pinned {{/if}}">
+
+    <div class="post-vote vote">
+      {{#with post}}
+        {{vote 'up' class='vote-up' selected_class='vote-voted'}}
+        {{vote 'sum' class="vote-sum"}}
+        {{vote 'down' class='vote-down' selected_class='vote-voted'}}
+      {{/with}}
+    </div>
+
+    <div class="post-container">
+
+      <div class="post-header">
+        <h1 title="{{post.title}}">{{post.title}}</h1>
+        <div class="post-info">
+          <div class="post-avatar {{#if post.author.agent}} post-avatar-agent {{/if}}">
+            <img src="{{post.author.avatar_url}}" alt="Avatar" />
+          </div>
+          <div class="post-meta">
+            <strong class="post-author" title="{{post.author.name}}">
+              {{#if post.author.url}}
+                <a href="{{post.author.url}}" target="_zendesk_lotus">
+                  {{post.author.name}}
+                </a>
+              {{else}}
+                {{post.author.name}}
+              {{/if}}
+            </strong>
+            <div class="post-published meta">
+              {{date post.created_at}}
+            </div>
+          </div>
+          <div class="post-status">
+            {{#if post.status}}
+              <span class="post-{{post.status_dasherized}}">{{post.status_name}}</span>
+            {{/if}}
+          </div>
+          <div class="post-follow">{{subscribe}}</div>
+        </div>
+      </div>
+
+      <div class="content-body post-body">{{post.details}}</div>
+
+      <div class="post-share">{{share}}</div>
+
+    </div>
+
+  </article>
+
+  <div class="comment-sorter">
+    {{#each comment_sorters}}
+      <a aria-selected="{{selected}}" href="{{url}}">{{name}}</a>
+    {{/each}}
+  </div>
+
+  <h4 class="comment-heading">
+    {{t 'comments_count' count=post.comment_count}}
+  </h4>
+
+  <ul id="comments" class="comment-list">
+    {{#each comments}}
+      <li id="{{anchor}}" class="comment">
+
+        {{#if official}}
+          <div class="comment-bookmark"></div>
+        {{else}}
+          <div class="comment-vote vote">
+            {{vote 'up' class='vote-up' selected_class='vote-voted'}}
+            {{vote 'sum' class="vote-sum"}}
+            {{vote 'down' class='vote-down' selected_class='vote-voted'}}
+          </div>
+        {{/if}}
+
+        <div class="comment-avatar {{#if author.agent}} comment-avatar-agent {{/if}}">
+          <img src="{{author.avatar_url}}" alt="Avatar" />
+        </div>
+
+        <div class="comment-container">
+
+          <header class="comment-header">
+            <strong class="comment-author" title="{{author.name}}">
+              {{#if author.url}}
+                <a href="{{author.url}}" target="_zendesk_lotus">{{author.name}}</a>
+              {{else}}
+                {{author.name}}
+              {{/if}}
+            </strong>
+            {{date created_at class='comment-published'}}
+            {{#if official}}
+              <span class="comment-official">{{t 'official_comment'}}</span>
+            {{/if}}
+            {{#if pending}}
+              <span class="comment-pending">{{t 'pending_approval'}}</span>
+            {{/if}}
+          </header>
+
+          <div class="content-body comment-body">{{body}}</div>
+
+          <footer class="comment-footer">
+            <span class="comment-actions">
+              {{#with ticket}}
+                <a href="{{url}}" target="_zendesk_lotus" class="escalation-badge">
+                  #{{id}}
+                </a>
+              {{/with}}
+              {{actions}}
+            </span>
+          </footer>
+
+        </div>
+
+      </li>
+    {{/each}}
+  </ul>
+
+  {{pagination}}
+
+  <div>{{comment_callout}}</div>
+
+  {{#form 'comment' class='comment-form'}}
+    <div class="comment-vote"></div>
+    <div class="comment-avatar">
+      {{user_avatar class='user-avatar'}}
+    </div>
+    <div class="comment-container">
+      {{wysiwyg 'body'}}
+      <div class="comment-form-controls">
+        {{checkbox 'official'}}
+        {{label 'official'}}
+        {{input type='submit'}}
+      </div>
+    </div>
+  {{/form}}
+
+</div>

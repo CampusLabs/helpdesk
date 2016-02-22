@@ -1,0 +1,79 @@
+<nav class="sub-nav">
+  {{breadcrumbs}}
+  {{search}}
+</nav>
+
+<header class="page-header">
+  <span class="dropdown">
+    <span class="dropdown-toggle">
+      <h1>{{t 'community'}}</h1>
+    </span>
+    <span class="dropdown-menu" role="menu">
+      {{#link 'topics' role='menuitem'}}
+        {{t 'show_topics'}}
+      {{/link}}
+      {{#link 'posts' role='menuitem' selected='true'}}
+        {{t 'show_all_posts'}}
+      {{/link}}
+    </span>
+  </span>
+  <span class="post-to-community">
+    {{link 'new_post' role='button'}}
+  </span>
+</header>
+
+<div class="topic-header">
+  <span class="topic-filters">
+    <span class="dropdown">
+      <span class="dropdown-toggle">
+        {{current_filter.label}}
+      </span>
+      <span class="dropdown-menu" role="menu">
+        {{#each filters}}
+          <a href="{{url}}" aria-selected="{{selected}}" role="menuitem">
+            {{name}}
+          </a>
+        {{/each}}
+      </span>
+    </span>
+    <span class="dropdown">
+      <span class="dropdown-toggle">
+        {{current_sorter.label}}
+      </span>
+      <span class="dropdown-menu" role="menu">
+        {{#each sorters}}
+          <a href="{{url}}" aria-selected="{{selected}}" role="menuitem">
+            {{name}}
+          </a>
+        {{/each}}
+      </span>
+    </span>
+  </span>
+</div>
+
+{{#each posts}}
+  <div class="post-overview {{#if featured}}post-featured{{/if}} {{#if pinned}}post-pinned{{/if}} clearfix">
+    <span class="post-overview-info">
+      <a href="{{url}}" title="{{title}}">{{title}}</a>
+      <span class="meta-group">
+        <span>{{author.name}}</span>
+        <span>{{date created_at timeago=true}}</span>
+      </span>
+    </span>
+    <span class="post-overview-count">
+      <strong>{{comment_count}}</strong>
+      {{t 'comment' count=comment_count}}
+    </span>
+    <span class="post-overview-count">
+      <strong>{{vote_sum}}</strong>
+      {{t 'vote' count=vote_sum}}
+    </span>
+    <span class="post-overview-status">
+      {{#if status}}
+        <span class="post-{{status_dasherized}}">{{status_name}}</span>
+      {{/if}}
+    </span>
+  </div>
+{{/each}}
+
+{{pagination}}
